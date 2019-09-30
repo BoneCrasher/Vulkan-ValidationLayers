@@ -741,7 +741,7 @@ void ValidationStateTracker::UpdateDrawState(CMD_BUFFER_STATE *cb_state, const V
 
                 if (need_update) {
                     // Bind this set and its active descriptor resources to the command buffer
-                    descriptor_set->UpdateDrawState(this, cb_state, binding_req_map);
+                    descriptor_set->UpdateDrawState(this, cb_state, pPipe, binding_req_map);
 
                     state.per_set[setIndex].validated_set = descriptor_set;
                     state.per_set[setIndex].validated_set_change_count = descriptor_set->GetChangeCount();
@@ -951,6 +951,7 @@ void ValidationStateTracker::ResetCommandBufferState(const VkCommandBuffer cb) {
         // Clean up the label data
         ResetCmdDebugUtilsLabel(report_data, pCB->commandBuffer);
         pCB->debug_label.Reset();
+        pCB->validate_descriptorsets_in_queuesubmit.clear();
     }
     if (command_buffer_reset_callback) {
         (*command_buffer_reset_callback)(cb);
