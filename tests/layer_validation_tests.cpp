@@ -226,13 +226,15 @@ void PositiveTestRenderPassCreate(ErrorMonitor *error_monitor, const VkDevice de
 }
 
 void TestRenderPass2KHRCreate(ErrorMonitor *error_monitor, const VkDevice device, const VkRenderPassCreateInfo2KHR *create_info,
-                              const char *rp2_vuid) {
+                              const std::vector<const char *> rp2_vuids) {
     VkRenderPass render_pass = VK_NULL_HANDLE;
     VkResult err;
     PFN_vkCreateRenderPass2KHR vkCreateRenderPass2KHR =
         (PFN_vkCreateRenderPass2KHR)vk::GetDeviceProcAddr(device, "vkCreateRenderPass2KHR");
 
-    error_monitor->SetDesiredFailureMsg(VK_DEBUG_REPORT_ERROR_BIT_EXT, rp2_vuid);
+    for (auto rp2_vuid = rp2_vuids.begin(); rp2_vuid != rp2_vuids.end(); rp2_vuid++) {
+        error_monitor->SetDesiredFailureMsg(VK_DEBUG_REPORT_ERROR_BIT_EXT, *rp2_vuid);
+    }
     err = vkCreateRenderPass2KHR(device, create_info, nullptr, &render_pass);
     if (err == VK_SUCCESS) vk::DestroyRenderPass(device, render_pass, nullptr);
     error_monitor->VerifyFound();
