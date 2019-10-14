@@ -2470,7 +2470,7 @@ TEST_F(VkLayerTest, RenderPassCreate2SubpassInvalidInputAttachmentParameters) {
 
     // Test for invalid aspect mask bits
     rp2_vuids = {"VUID-VkSubpassDescription2KHR-attachment-02799"};
-    reference.aspectMask = 0x40000000; // invalid VkImageAspectFlagBits value
+    reference.aspectMask = 0x40000000;  // invalid VkImageAspectFlagBits value
     TestRenderPass2KHRCreate(m_errorMonitor, m_device->device(), &rpci2, rp2_vuids);
 }
 
