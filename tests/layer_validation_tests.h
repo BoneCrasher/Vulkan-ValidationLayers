@@ -674,7 +674,7 @@ void TestRenderPassCreate(ErrorMonitor *error_monitor, const VkDevice device, co
 void PositiveTestRenderPassCreate(ErrorMonitor *error_monitor, const VkDevice device, const VkRenderPassCreateInfo *create_info,
                                   bool rp2_supported);
 void TestRenderPass2KHRCreate(ErrorMonitor *error_monitor, const VkDevice device, const VkRenderPassCreateInfo2KHR *create_info,
-                              const std::vector<const char *> rp2_vuids);
+                              const char *rp2_vuid);
 void TestRenderPassBegin(ErrorMonitor *error_monitor, const VkDevice device, const VkCommandBuffer command_buffer,
                          const VkRenderPassBeginInfo *begin_info, bool rp2Supported, const char *rp1_vuid, const char *rp2_vuid);
 

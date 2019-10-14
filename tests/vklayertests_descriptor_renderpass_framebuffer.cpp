@@ -2170,9 +2170,9 @@ TEST_F(VkLayerTest, RenderPassCreateOverlappingCorrelationMasks) {
         correlationMasks[1] = 0;
         safe_VkRenderPassCreateInfo2KHR safe_rpci2;
         ConvertVkRenderPassCreateInfoToV2KHR(rpci, &safe_rpci2);
-        std::vector<const char *> rp2_vuids = {"VUID-VkRenderPassCreateInfo2KHR-viewMask-03057"};
 
-        TestRenderPass2KHRCreate(m_errorMonitor, m_device->device(), safe_rpci2.ptr(), rp2_vuids);
+        TestRenderPass2KHRCreate(m_errorMonitor, m_device->device(), safe_rpci2.ptr(),
+                                 "VUID-VkRenderPassCreateInfo2KHR-viewMask-03057");
     }
 }
 
@@ -2465,13 +2465,11 @@ TEST_F(VkLayerTest, RenderPassCreate2SubpassInvalidInputAttachmentParameters) {
         VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO_2_KHR, nullptr, 0, 1, &attach_desc, 1, &subpass, 0, nullptr, 0, nullptr};
 
     // Test for aspect mask of 0
-    std::vector<const char *> rp2_vuids = {"VUID-VkSubpassDescription2KHR-attachment-02800"};
-    TestRenderPass2KHRCreate(m_errorMonitor, m_device->device(), &rpci2, rp2_vuids);
+    TestRenderPass2KHRCreate(m_errorMonitor, m_device->device(), &rpci2, "VUID-VkSubpassDescription2KHR-attachment-02800");
 
     // Test for invalid aspect mask bits
-    rp2_vuids = {"VUID-VkSubpassDescription2KHR-attachment-02799"};
     reference.aspectMask = 0x40000000;  // invalid VkImageAspectFlagBits value
-    TestRenderPass2KHRCreate(m_errorMonitor, m_device->device(), &rpci2, rp2_vuids);
+    TestRenderPass2KHRCreate(m_errorMonitor, m_device->device(), &rpci2, "VUID-VkSubpassDescription2KHR-attachment-02799");
 }
 
 TEST_F(VkLayerTest, RenderPassCreateInvalidSubpassDependencies) {
